@@ -4,82 +4,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
   </head>
   <body>
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for
+    message in messages %}
+    <p id="flash-message">{{ message }}</p>
+    {% endfor %} {% endif %} {% endwith %}
+    <div class="container">
+      <h1>Sign Up Form</h1>
+      <form action="{{url_for('home')}}" method="post">
+        <div class="text-input">
+          <label for="name">Name: </label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            value="{{form_data['name']}}"
+            required
+          />
+        </div>
 
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-      {% for message in messages %}
-        <p id="flash-message">{{ message }}</p>
-      {% endfor %}
-  {% endif %}
-{% endwith %}
+        <div class="text-input">
+          <label for="email">Email: </label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            value="{{form_data['email']}}"
+            required
+          />
+        </div>
 
+        <div class="text-input">
+          <label for="password">Password: </label>
+          <input id="password" type="password" name="password" required />
+        </div>
 
-    <form action="{{url_for('home')}}" method="post">
-      <div>
-        <label for="name">Name: </label>
-        <input
-          id="name"
-          type="text"
-          name="name"
-          value="{{form_data['name']}}"
-          required
-        />
-      </div>
+        <div class="text-input">
+          <label for="confirm">Confirm Password: </label>
+          <input id="confirm" type="password" name="confirm_pass" required />
+        </div>
 
-      <div>
-      <label for="email">Email: </label>
-      <input
-        id="email"
-        type="email"
-        name="email"
-        value="{{form_data['email']}}"
-        required
-      />
-      </div>
-
-      <div>
-        <label for="password">Password: </label>
-        <input
-          id="password"
-          type="password"
-          name="password"
-          required
-        />
-      </div>
-
-      <div>
-        <label for="confirm">Confirm Password: </label>
-        <input
-          id="confirm"
-          type="password"
-          name="confirm_pass"
-          required
-        />
-      </div>
-
-      <div>
         <label for="bio">Bio: </label>
+
         <textarea name="bio" id="bio" minlength="20">
 {{form_data['bio'] or ''}}</textarea
         >
-      </div>
 
-      <div>
-        <input
-          id="agree-terms"
-          type="checkbox"
-          name="agree_terms"
-          {% if form_data["agree_terms"] %}checked{% endif %}
-          required
-        />
-        <label for="agree-terms">Agree to Terms</label>
-      </div>
-      <p id="error-message">{{error or ''}}</p>
-      <button type="submit">Submit</button>
-
-    </form>
+        <div>
+          <input id="agree-terms" type="checkbox" name="agree_terms" {% if
+          form_data["agree_terms"] %}checked{% endif %} required />
+          <label for="agree-terms">Agree to Terms</label>
+        </div>
+        {% for error in errors %}
+            <p class="error-message">{{error}}</p>
+        {% endfor %}
+        
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   </body>
 </html>

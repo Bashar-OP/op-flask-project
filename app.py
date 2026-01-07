@@ -5,25 +5,27 @@ import secrets
 
 def validate(form_data):
     
+    errors = []
+
     if not form_data['name']:
-        return 'Name is required.'
+        errors.append('Name is required.')
     
     if '@' not in form_data['email']:
-        return 'Email must include @.'
+        errors.append( 'Email must include @.')
 
     if len(form_data['password']) < 8:
-        return 'Password is at least 8 characters.'
+        errors.append( 'Password is at least 8 characters.')
 
     if form_data['confirm_pass'] != form_data['password']:
-        return 'Confirm password must match password.'
+        errors.append( 'Confirm password must match password.')
 
     if form_data['bio'] and len(form_data['bio']) < 20:
-        return 'Bio must be at least 20 characters if provided.'
+        errors.append( 'Bio must be at least 20 characters if provided.')
 
     if not form_data['agree_terms']:
-        return 'Agree to Terms must be checked.'
+        errors.append( 'Agree to Terms must be checked.')
     
-    return ''
+    return errors
     
 
 
@@ -36,10 +38,10 @@ app.config['SECRET_KEY'] = secrets.token_hex();
 @app.route('/',methods=['GET','POST'])
 def home():
     form_data = {}
-    error_message = ''
+    error_messages = []
 
     if request.method == 'GET':
-        return render_template('form.html',form_data=form_data,error=error_message)
+        return render_template('form.html',form_data=form_data,error=error_messages)
     
     data_keys = ['name','email','password','confirm_pass','bio','agree_terms']
     
@@ -51,10 +53,10 @@ def home():
     form_data['bio'] = form_data['bio'].strip() or None
     form_data['agree_terms'] = bool(form_data['agree_terms'])
 
-    error_message = validate(form_data)
+    error_messages = validate(form_data)
     
-    if error_message != '' :
-        return render_template('form.html',form_data=form_data,error=error_message)
+    if len(error_messages) != 0 :
+        return render_template('form.html',form_data=form_data,errors=error_messages)
     
     flash('success submit')
     return redirect(url_for('home'))

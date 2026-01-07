@@ -1,15 +1,39 @@
+*{
+    font-family: sans-serif;
+}
+.container{
+    border: 1px solid black; 
+     border-radius: 5px;
+}
+
+h1{
+    margin: 0;
+    text-align: center;
+    line-height: 2;
+    border-bottom: 1px solid black;
+}
 
 form{
-    display: inline-block ;
-    border: 1px solid black;
-    border-radius: 5px;
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 1rem;
+    
 }
 
 form > div,button{
-    margin: 1rem 2rem;
+    margin-block: 1rem
 }
 
+.text-input{
+    display: flex;
+    justify-content: space-between;
+    
+}
 
+label[for="bio"]{
+    display: block;
+}
 
 #flash-message{
     color: green;
@@ -17,6 +41,15 @@ form > div,button{
     margin: 0 auto;
 }
 
-#error-message{
+.error-message{
      color: red;
 }
+
+button[type = "submit"]{
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+
