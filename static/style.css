@@ -1,0 +1,22 @@
+
+form{
+    display: inline-block ;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+form > div,button{
+    margin: 1rem 2rem;
+}
+
+
+
+#flash-message{
+    color: green;
+    width: 1rem;
+    margin: 0 auto;
+}
+
+#error-message{
+     color: red;
+}
